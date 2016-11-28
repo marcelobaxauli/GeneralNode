@@ -50,7 +50,7 @@ import javax.xml.bind.DatatypeConverter;
 public class GeneralNodeMain {
 
     private static final String NODES_URL_FILENAME = "url_nodes" + File.separator + "url_nodes.properties";
-    private static final int NUMBER_OF_LIEUTENANT = 5; // tem que bater com o número de nós no arquivo
+    private static final int NUMBER_OF_LIEUTENANT = 2; // tem que bater com o número de nós no arquivo
 
     private List<LieutenantAddress> lieutenantAddresses = new ArrayList<LieutenantAddress>();
     private final KeyFactory keyFactory;
@@ -73,8 +73,6 @@ public class GeneralNodeMain {
         keyFactory = KeyFactory.getInstance("DSA");
 
         this.privateKey = this.keyFactory.generatePrivate(new PKCS8EncodedKeySpec(privateKeyBytes));
-
-        System.out.println("private key bytes: " + Arrays.toString(privateKeyBytes));
 
     }
 
@@ -241,7 +239,7 @@ public class GeneralNodeMain {
         // Assina a mensagem
         String message = newSignedMessage(order);
 
-        System.out.println("Message: " + message);
+        System.out.println("\nSending message: " + message);
 
         Socket socket = null;
         OutputStream outputStream = null;
@@ -300,8 +298,8 @@ public class GeneralNodeMain {
         // Cria a mensagem de retreat
         String retreatMessage = newSignedMessage("retreat");
 
-        System.out.println("Attack message: " + attackMessage);
-        System.out.println("Retreat message: " + retreatMessage);
+        System.out.println("\nSending message: " + attackMessage);
+        System.out.println("Sending message: " + retreatMessage + "\n");
 
         Socket socket = null;
         OutputStream outputStream = null;
@@ -369,8 +367,6 @@ public class GeneralNodeMain {
 
         signatureHelper.update(order.getBytes());
         byte[] signature = signatureHelper.sign();
-
-        System.out.println("signature: " + Arrays.toString(signature));
 
         // passa pra Base64 pra concatenar ao final da própria mensagem como texto.
         String signatureBase64 = DatatypeConverter.printBase64Binary(signature);
